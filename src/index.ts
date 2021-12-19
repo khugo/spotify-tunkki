@@ -2,12 +2,14 @@ import { Page } from "puppeteer-core";
 
 const puppeteer = require("puppeteer-core");
 const { setTimeout } = require("timers/promises");
+const path = require("path");
 
 const LOGIN_URL = "https://accounts.spotify.com/en/login?continue=https:%2F%2Fopen.spotify.com%2F"
+const MAC_CHROME_PATH = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 
 const main = async () => {
     console.log("Launching browser")
-    const browser = await puppeteer.launch({ headless: true, executablePath: "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome", args: puppeteer.defaultArgs().filter(arg => arg !== "--mute-audio") });
+    const browser = await puppeteer.launch({ headless: true, executablePath: path.join(__dirname, "../run_chromium"), args: puppeteer.defaultArgs().filter(arg => arg !== "--mute-audio") });
     console.log("Launching page")
     const page = await browser.newPage();
     await login(page);
