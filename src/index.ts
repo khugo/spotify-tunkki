@@ -1,7 +1,6 @@
 import { Page } from "puppeteer-core";
 
 const puppeteer = require("puppeteer-core");
-const { setTimeout } = require("timers/promises");
 const path = require("path");
 
 const LOGIN_URL = "https://accounts.spotify.com/en/login?continue=https:%2F%2Fopen.spotify.com%2F"
@@ -34,7 +33,7 @@ const selectThisDeviceForPlayback = async (page: Page) => {
     await page.evaluate((deviceSelector) => document.querySelector(deviceSelector).parentElement.click(), deviceSelector)
     const thisDeviceBtnSelector = ".connect-device-list-item";
     await page.waitForSelector(thisDeviceBtnSelector);
-    await setTimeout(1000);
+    await new Promise(resolve => setTimeout(resolve, 1000))
     await page.evaluate(async (thisDeviceBtnSelector) => {
         const go = async (attempts = 0) => {
             if (attempts > 100) {
